@@ -1,0 +1,2097 @@
+Get started: Databricks workspace onboarding
+November 04, 2024
+
+This article provides you with a 30-minute setup guide for your first Databricks workspace. The steps in this article will show you how to do the following:
+
+Create your first Databricks workspace.
+
+Create your first compute resource.
+
+Load data into Databricks from your cloud storage.
+
+Add users to the workspace.
+
+Give users access to data so they can start working.
+
+Requirements
+To complete the instructions in this article, you need the following:
+
+Permission in your AWS account to provision IAM roles and S3 buckets.
+
+Available service quotas in your AWS region for a Databricks deployment. You need an available VPC and NAT gateway. You can view your available quotas and request increases using the AWS Service Quotas console.
+
+Access to data stored in cloud object storage. This article provides instructions for S3 buckets.
+
+Note
+
+If you decide at any point to cancel your Databricks subscription, delete all associated resources from your AWS console to prevent continued costs. For instructions, see Cancel your Databricks subscription.
+
+Step 1: Create your first workspace
+After you sign up for the free trial and verify your email address, you’ll have access to your Databricks account.
+
+When you first log in to your account, follow the instructions to set up your workspace. These instructions use a quickstart to create the workspace, which quickly provisions the cloud resources for you.
+
+Enter a human-readable name for your workspace. This cannot be changed later.
+
+Select the AWS region you want to deploy the workspace in. Remember to verify that you have an available VPC and NAT gateway in your cloud region.
+
+Click Start Quickstart. This opens up your AWS Console where a prepopulated CloudFormation template will deploy your resources and workspace for you.
+
+Select the I acknowledge that AWS CloudFormation might create IAM resources with custom names checkbox.
+
+Warning
+
+Editing additional fields in the template could lead to a failed deployment.
+
+Click Create stack.
+
+Return to the Databricks account console and wait for the workspace to finish deploying. It should take a only few minutes.
+
+If you encounter any errors in the deployment process, email onboarding-help@databricks.com for troubleshooting help.
+
+Note
+
+If you are your organization’s cloud admin but will not be the day-to-day admin of your Databricks deployment, add a workspace admin to the account to take over the rest of the onboarding steps. See Manage users in your account.
+
+Step 2: Create a compute resource
+To interact with your data, users in your workspace need running compute resources. There are a few different types of compute resources available in Databricks. These instructions create a serverless SQL warehouse that all workspace users can run SQL queries on.
+
+Note
+
+While Databricks does not charge you during your free trial, AWS will charge you for the compute resources Databricks deploys to your linked AWS account.
+
+Open your new workspace.
+
+On the sidebar, click SQL Warehouses.
+
+Click the Create SQL warehouse button.
+
+Give the SQL warehouse a name.
+
+Click Create.
+
+In the permissions modal, enter and select All Users, then click Add.
+
+Your serverless SQL warehouse should be up and running immediately be available for you to run SQL queries.
+
+Step 3: Connect your workspace to data sources
+To connect your Databricks workspace to your cloud storage, you need to create an external location. An external location is an object that combines a cloud storage path with the credential that authorizes access to the storage path.
+
+In your Databricks workspace, click Catalog on the sidebar.
+
+At the top of the page, click + Add.
+
+Click Add an external location.
+
+Databricks recommends using the AWS Quickstart, which ensures that your workspace is given the correct permissions on the bucket.
+
+In Bucket Name, enter the name of the bucket you want to import data from.
+
+Click Generate New Token and copy the token.
+
+Click Launch in Quickstart.
+
+In your AWS console, enter the copied token in the Databricks Personal Access Token field.
+
+Select the I acknowledge that AWS CloudFormation might create IAM resources with custom names checkbox.
+
+Click Create stack.
+
+To see the external locations in your workspace, click Catalog in the sidebar, at the bottom of the left navigation pane click External Data, and then click External Locations. Your new external location will have a name using the following syntax: db_s3_external_databricks-S3-ingest-<id>.
+
+Note
+
+The other external location you see connects your workspace to the default S3 bucket provisioned alongside your workspace. This external location shares a name with your workspace.
+
+Test your connection
+To test that external locations have functioning connections, do the following:
+
+Click on the external location you want to test.
+
+Click Test connection.
+
+Step 4: Add your data to Databricks
+Now that your workspace has a connection to your S3 bucket, you can add your data.
+
+Part of this step is choosing where to put your data. Databricks has a three-level namespace that organizes your data (catalog.schema.table). For this exercise, you’ll import the data into the default catalog named after your workspace.
+
+In the sidebar of your Databricks workspace, click New > Add data.
+
+Click Amazon S3.
+
+Select your external location from the drop-down menu.
+
+Select all the files you want to add to your Databricks catalog.
+
+Click Preview table.
+
+Select the default catalog (named after your workspace), the default schema, and then enter a name for your table.
+
+Click Create Table.
+
+You can now use Catalog Explorer in your workspace to see your data in Databricks.
+
+Step 5: Add users to your workspace
+Now that you have a running compute resource, a connection to your data, and data in the platform, you can start adding more users to your account.
+
+These instructions show you how to add individual users to your account and workspace.
+
+In the top bar of the Databricks workspace, click your username and then click Settings.
+
+In the sidebar, click Identity and access.
+
+Next to Users, click Manage.
+
+Click Add user, and then click Add new.
+
+Enter the user’s email address, and then click Add.
+
+Continue to add as many users to your account as you would like. New users receive an email prompting them to set up their account.
+
+Step 6: Grant permissions to users
+Now that you have users in your account, you must grant them access to the data and resources they will need. There are many ways you can do this, and your preferred method probably depends on your data governance strategy.
+
+The following are common considerations when setting up permissions for your users:
+
+Securable objects in Databricks are hierarchical and privileges are inherited downward. For example, granting the SELECT privilege on a catalog or schema automatically grants the privilege to all current and future objects within the catalog or schema.
+
+If you grant a user the SELECT permission on a schema or table, the user also needs the USE permission on the objects above the schema or table.
+
+If you want to grant other users permission to connect to external data sources, you can grant them the CREATE EXTERNAL LOCATION and CREATE STORAGE CREDENTIAL permission.
+
+For instructions on managing permissions in Databricks, see Unity Catalog privileges and securable objects.
+
+Next steps
+The users in your account should now be able to access and query data in your Databricks workspace.
+
+From here, you can continue to explore Databricks and build out your data strategy. Popular topics include:
+
+Create data visualizations using dashboards
+
+Build your first ETL pipeline
+
+Access instant and elastic compute with serverless warehouses
+
+AI and machine learning on Databricks
+
+Platform administration best practices
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create your first workspace
+Step 2: Create a compute resource
+Step 3: Connect your workspace to data sources
+Step 4: Add your data to Databricks
+Step 5: Add users to your workspace
+Step 6: Grant permissions to users
+Next steps
+
+
+
+Get started: Query and visualize data from a notebook
+October 10, 2024
+
+This get started article walks you through using a Databricks notebook to query sample data stored in Unity Catalog using SQL, Python, Scala, and R and then visualize the query results in the notebook.
+
+Requirements
+To complete the tasks in this article, you must meet the following requirements:
+
+Your workspace must have Unity Catalog enabled. For information on getting started with Unity Catalog, see Set up and manage Unity Catalog.
+
+You must have permission to use an existing compute resource or create a new compute resource. See Get started with Databricks or see your Databricks administrator.
+
+Step 1: Create a new notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 2: Query a table
+Query the samples.nyctaxi.trips table in Unity Catalog using the language of your choice.
+
+Copy and paste the following code into the new empty notebook cell. This code displays the results from querying the samples.nyctaxi.trips table in Unity Catalog.
+
+SQL
+Python
+Scala
+R
+Copy to clipboardCopy
+SELECT * FROM samples.nyctaxi.trips
+Press Shift+Enter to run the cell and then move to the next cell.
+
+The query results appear in the notebook.
+
+Step 3: Display the data
+Display the average fare amount by trip distance, grouped by the pickup zip code.
+
+Next to the Table tab, click + and then click Visualization.
+
+The visualization editor displays.
+
+In the Visualization Type drop-down, verify that Bar is selected.
+
+Select fare_amount for the X column.
+
+Select trip_distance for the Y column.
+
+Select Average as the aggregation type.
+
+Select pickup_zip as the Group by column.
+
+Bar chart
+Click Save.
+
+Next steps
+To learn about adding data from CSV file to Unity Catalog and visualize data, see Get started: Import and visualize CSV data from a notebook.
+
+To learn how to load data into Databricks using Apache Spark, see Tutorial: Load and transform data using Apache Spark DataFrames.
+
+To learn more about ingesting data into Databricks, see Ingest data into a Databricks lakehouse.
+
+To learn more about querying data with Databricks, see Query data.
+
+To learn more about visualizations, see Visualizations in Databricks notebooks.
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create a new notebook
+Step 2: Query a table
+Step 3: Display the data
+Next steps
+
+
+Get started: Import and visualize CSV data from a notebook
+September 24, 2024
+
+This article walks you through using a Databricks notebook to import data from a CSV file containing baby name data from health.data.ny.gov into your Unity Catalog volume using Python, Scala, and R. You also learn to modify a column name, visualize the data, and save to a table.
+
+Requirements
+To complete the tasks in this article, you must meet the following requirements:
+
+Your workspace must have Unity Catalog enabled. For information on getting started with Unity Catalog, see Set up and manage Unity Catalog.
+
+You must have the WRITE VOLUME privilege on a volume, the USE SCHEMA privilege on the parent schema, and the USE CATALOG privilege on the parent catalog.
+
+You must have permission to use an existing compute resource or create a new compute resource. See Get started with Databricks or see your Databricks administrator.
+
+Tip
+
+For a completed notebook for this article, see Import and visualize data notebooks.
+
+Step 1: Create a new notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 2: Define variables
+In this step, you define variables for use in the example notebook you create in this article.
+
+Copy and paste the following code into the new empty notebook cell. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice. You will save the baby name data into this table later in this article.
+
+Press Shift+Enter to run the cell and create a new blank cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+catalog = "<catalog_name>"
+schema = "<schema_name>"
+volume = "<volume_name>"
+download_url = "https://health.data.ny.gov/api/views/jxy9-yhdk/rows.csv"
+file_name = "baby_names.csv"
+table_name = "baby_names"
+path_volume = "/Volumes/" + catalog + "/" + schema + "/" + volume
+path_table = catalog + "." + schema
+print(path_table) # Show the complete path
+print(path_volume) # Show the complete path
+Step 3: Import CSV file
+In this step, you import a CSV file containing baby name data from health.data.ny.gov into your Unity Catalog volume.
+
+Copy and paste the following code into the new empty notebook cell. This code copies the rows.csv file from health.data.ny.gov into your Unity Catalog volume using the Databricks dbutuils command.
+
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+dbutils.fs.cp(f"{download_url}", f"{path_volume}" + "/" + f"{file_name}")
+Step 4: Load CSV data into a DataFrame
+In this step, you create a DataFrame named df from the CSV file that you previously loaded into your Unity Catalog volume by using the spark.read.csv method.
+
+Copy and paste the following code into the new empty notebook cell. This code loads baby name data into DataFrame df from the CSV file.
+
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df = spark.read.csv(f"{path_volume}/{file_name}",
+  header=True,
+  inferSchema=True,
+  sep=",")
+You can load data from many supported file formats.
+
+Step 5: Visualize data from notebook
+In this step, you use the display() method to display the contents of the DataFrame in a table in the notebook, and then visualize the data in a word cloud chart in the notebook.
+
+Copy and paste the following code into the new empty notebook cell, and then click Run cell to display the data in a table.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(df)
+Review the results in the table.
+
+Next to the Table tab, click + and then click Visualization.
+
+In the visualization editor, click Visualization Type, and verify that Word cloud is selected.
+
+In the Words column, verify that First Name is selected.
+
+In Frequencies limit, click 35.
+
+word cloud chart
+Click Save.
+
+Step 6: Save the DataFrame to a table
+Important
+
+To save your DataFrame in Unity Catalog, you must have CREATE table privileges on the catalog and schema. For information on permissions in Unity Catalog, see Privileges and securable objects in Unity Catalog and Manage privileges in Unity Catalog.
+
+Copy and paste the following code into an empty notebook cell. This code replaces a space in the column name. Special characters, such as spaces are not allowed in column names. This code uses the Apache Spark withColumnRenamed() method.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df = df.withColumnRenamed("First Name", "First_Name")
+df.printSchema
+Copy and paste the following code into an empty notebook cell. This code saves the contents of the DataFrame to a table in Unity Catalog using the table name variable that you defined at the start of this article.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df.write.mode("overwrite").saveAsTable(f"{path_table}" + "." + f"{table_name}")
+To verify that the table was saved, click Catalog in the left sidebar to open the Catalog Explorer UI. Open your catalog and then your schema to verify that the table appears.
+
+Click your table to view the table schema on the Overview tab.
+
+Click Sample Data to view 100 rows of data from the table.
+
+Import and visualize data notebooks
+Use one of the following notebooks to perform the steps in this article. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice.
+
+Python
+Scala
+R
+Import data from CSV using Python
+Open notebook in new tabCopy to clipboard Copy link for import
+
+
+Expand notebook ▼
+Next steps
+To learn about adding additional data into existing table from a CSV file, see Get started: Ingest and insert additional data.
+
+To learn about cleansing and enhancing data, see Get started: Enhance and cleanse data.
+
+Additional resources
+Get started: Query and visualize data from a notebook
+
+Tutorial: Load and transform data using Apache Spark DataFrames
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create a new notebook
+Step 2: Define variables
+Step 3: Import CSV file
+Step 4: Load CSV data into a DataFrame
+Step 5: Visualize data from notebook
+Step 6: Save the DataFrame to a table
+Import and visualize data notebooks
+Next steps
+Additional resources
+
+
+
+Run your first ETL workload on Databricks
+October 10, 2024
+
+Learn how to use production-ready tools from Databricks to develop and deploy your first extract, transform, and load (ETL) pipelines for data orchestration.
+
+By the end of this article, you will feel comfortable:
+
+Launching a Databricks all-purpose compute cluster.
+
+Creating a Databricks notebook.
+
+Configuring incremental data ingestion to Delta Lake with Auto Loader.
+
+Executing notebook cells to process, query, and preview data.
+
+Scheduling a notebook as a Databricks job.
+
+This tutorial uses interactive notebooks to complete common ETL tasks in Python or Scala.
+
+You can also use Delta Live Tables to build ETL pipelines. Databricks created Delta Live Tables to reduce the complexity of building, deploying, and maintaining production ETL pipelines. See Tutorial: Run your first Delta Live Tables pipeline.
+
+You can also use the Databricks Terraform provider to create this article’s resources. See Create clusters, notebooks, and jobs with Terraform.
+
+Requirements
+You are logged into a Databricks workspace.
+
+You have permission to create a cluster.
+
+Note
+
+If you do not have cluster control privileges, you can still complete most of the steps below as long as you have access to a cluster.
+
+Step 1: Create a cluster
+To do exploratory data analysis and data engineering, create a cluster to provide the compute resources needed to execute commands.
+
+Click compute icon Compute in the sidebar.
+
+On the Compute page, click Create Cluster. This opens the New Cluster page.
+
+Specify a unique name for the cluster, leave the remaining values in their default state, and click Create Cluster.
+
+To learn more about Databricks clusters, see Compute.
+
+Step 2: Create a Databricks notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 3: Configure Auto Loader to ingest data to Delta Lake
+Databricks recommends using Auto Loader for incremental data ingestion. Auto Loader automatically detects and processes new files as they arrive in cloud object storage.
+
+Databricks recommends storing data with Delta Lake. Delta Lake is an open source storage layer that provides ACID transactions and enables the data lakehouse. Delta Lake is the default format for tables created in Databricks.
+
+To configure Auto Loader to ingest data to a Delta Lake table, copy and paste the following code into the empty cell in your notebook:
+
+Python
+Scala
+Copy to clipboardCopy
+# Import functions
+from pyspark.sql.functions import col, current_timestamp
+
+# Define variables used in code below
+file_path = "/databricks-datasets/structured-streaming/events"
+username = spark.sql("SELECT regexp_replace(current_user(), '[^a-zA-Z0-9]', '_')").first()[0]
+table_name = f"{username}_etl_quickstart"
+checkpoint_path = f"/tmp/{username}/_checkpoint/etl_quickstart"
+
+# Clear out data from previous demo execution
+spark.sql(f"DROP TABLE IF EXISTS {table_name}")
+dbutils.fs.rm(checkpoint_path, True)
+
+# Configure Auto Loader to ingest JSON data to a Delta table
+(spark.readStream
+  .format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", checkpoint_path)
+  .load(file_path)
+  .select("*", col("_metadata.file_path").alias("source_file"), current_timestamp().alias("processing_time"))
+  .writeStream
+  .option("checkpointLocation", checkpoint_path)
+  .trigger(availableNow=True)
+  .toTable(table_name))
+Note
+
+The variables defined in this code should allow you to safely execute it without risk of conflicting with existing workspace assets or other users. Restricted network or storage permissions will raise errors when executing this code; contact your workspace administrator to troubleshoot these restrictions.
+
+To learn more about Auto Loader, see What is Auto Loader?.
+
+Step 4: Process and interact with data
+Notebooks execute logic cell-by-cell. To execute the logic in your cell:
+
+To run the cell you completed in the previous step, select the cell and press SHIFT+ENTER.
+
+To query the table you’ve just created, copy and paste the following code into an empty cell, then press SHIFT+ENTER to run the cell.
+
+Python
+Scala
+Copy to clipboardCopy
+df = spark.read.table(table_name)
+To preview the data in your DataFrame, copy and paste the following code into an empty cell, then press SHIFT+ENTER to run the cell.
+
+Python
+Scala
+Copy to clipboardCopy
+display(df)
+To learn more about interactive options for visualizing data, see Visualizations in Databricks notebooks.
+
+Step 5: Schedule a job
+You can run Databricks notebooks as production scripts by adding them as a task in a Databricks job. In this step, you will create a new job that you can trigger manually.
+
+To schedule your notebook as a task:
+
+Click Schedule on the right side of the header bar.
+
+Enter a unique name for the Job name.
+
+Click Manual.
+
+In the Cluster drop-down, select the cluster you created in step 1.
+
+Click Create.
+
+In the window that appears, click Run now.
+
+To see the job run results, click the External Link icon next to the Last run timestamp.
+
+For more information on jobs, see What are Databricks Jobs?.
+
+Additional integrations
+Learn more about integrations and tools for data engineering with Databricks:
+
+Connect your favorite IDE
+
+Use dbt with Databricks
+
+Learn about the Databricks Command Line Interface (CLI)
+
+Learn about the Databricks Terraform Provider
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create a cluster
+Step 2: Create a Databricks notebook
+Step 3: Configure Auto Loader to ingest data to Delta Lake
+Step 4: Process and interact with data
+Step 5: Schedule a job
+Additional integrations
+
+
+
+Get started: Ingest and insert additional data
+September 24, 2024
+
+This get started article walks you through using a Databricks notebook to ingest a CSV file containing additional baby name data into your Unity Catalog volume and then import the new baby name data into an existing table by using Python, Scala, and R.
+
+Important
+
+This get started article builds on Get started: Import and visualize CSV data from a notebook. You must complete the steps in that article in order to complete this article. For the complete notebook for that getting started article, see Import and visualize data notebooks.
+
+Requirements
+To complete the tasks in this article, you must meet the following requirements:
+
+Your workspace must have Unity Catalog enabled. For information on getting started with Unity Catalog, see Set up and manage Unity Catalog.
+
+You must have the WRITE VOLUME privilege on a volume, the USE SCHEMA privilege on the parent schema, and the USE CATALOG privilege on the parent catalog.
+
+You must have permission to use an existing compute resource or create a new compute resource. See Get started with Databricks or see your Databricks administrator.
+
+Tip
+
+For a completed notebook for this article, see Ingest additional data notebooks.
+
+Step 1: Create a new notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 2: Define variables
+In this step, you define variables for use in the example notebook you create in this article.
+
+Copy and paste the following code into the new empty notebook cell. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice. You will save the baby name data into this table later in this article.
+
+Press Shift+Enter to run the cell and create a new blank cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+catalog = "<catalog_name>"
+schema = "<schema_name>"
+volume = "<volume_name>"
+file_name = "new_baby_names.csv"
+table_name = "baby_names"
+path_volume = "/Volumes/" + catalog + "/" + schema + "/" + volume
+path_table = catalog + "." + schema
+print(path_table) # Show the complete path
+print(path_volume) # Show the complete path
+Step 3: Add new CSV file of data to your Unity Catalog volume
+This step creates a DataFrame named df with a new baby name for 2022 and then saves that data into a new CSV file in your Unity Catalog volume.
+
+Note
+
+This step simulates adding new yearly data to the existing data loaded for previous years. In your production environment, this incremental data would be stored in cloud storage.
+
+Copy and paste the following code into the new empty notebook cell. This code creates the DataFrame with additional baby name data, and then writes that data to a CSV file in your Unity Catalog volume.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+data = [[2022, "CARL", "Albany", "M", 42]]
+
+df = spark.createDataFrame(data, schema="Year int, First_Name STRING, County STRING, Sex STRING, Count int")
+# display(df)
+(df.coalesce(1)
+    .write
+    .option("header", "true")
+    .mode("overwrite")
+    .csv(f"{path_volume}/{file_name}"))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 4: Load data into DataFrame from CSV file
+Note
+
+This step simulates loading data from cloud storage.
+
+Copy and paste the following code into an empty notebook cell. This code loads the new baby names data into a new DataFrame from the CSV file.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df1 = spark.read.csv(f"{path_volume}/{file_name}",
+    header=True,
+    inferSchema=True,
+    sep=",")
+display(df1)
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 5: Insert into existing table
+Copy and paste the following code into an empty notebook cell. This code appends the new baby names data from the DataFrame into the existing table.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df.write.mode("append").insertInto(f"{path_table}.{table_name}")
+display(spark.sql(f"SELECT * FROM {path_table}.{table_name} WHERE Year = 2022"))
+Press Ctrl+Enter to run the cell.
+
+Ingest additional data notebooks
+Use one of the following notebooks to perform the steps in this article. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice.
+
+Python
+Scala
+R
+Ingest and insert additional data using Python
+Open notebook in new tabCopy to clipboard Copy link for import
+
+
+Expand notebook ▼
+Next steps
+To learn about cleansing and enhancing data, see Get started: Enhance and cleanse data.
+
+Additional resources
+Get started: Query and visualize data from a notebook
+
+Get started: Import and visualize CSV data from a notebook
+
+Tutorial: Load and transform data using Apache Spark DataFrames
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create a new notebook
+Step 2: Define variables
+Step 3: Add new CSV file of data to your Unity Catalog volume
+Step 4: Load data into DataFrame from CSV file
+Step 5: Insert into existing table
+Ingest additional data notebooks
+Next steps
+Additional resources
+
+
+Get started: Enhance and cleanse data
+September 24, 2024
+
+This get started article walks you through using a Databricks notebook to cleanse and enhance the New York State baby name data that was previously loaded into a table in Unity Catalog by using Python, Scala, and R. In this article, you change column names, change capitalization, and spell out the sex of each baby name from the raw data table - and then save the DataFrame into a silver table. Then you filter the data to only include data for 2021, group the data at the state level, and then sort the data by count. Finally, you save this DataFrame into a gold table and visualize the data in a bar chart. For more information on silver and gold tables, see medallion architecture.
+
+Important
+
+This get started article builds on Get started: Ingest and insert additional data. You must complete the steps in that article to complete this article. For the complete notebook for that getting started article, see Ingest additional data notebooks.
+
+Requirements
+To complete the tasks in this article, you must meet the following requirements:
+
+Your workspace must have Unity Catalog enabled. For information on getting started with Unity Catalog, see Set up and manage Unity Catalog.
+
+You must have the WRITE VOLUME privilege on a volume, the USE SCHEMA privilege on the parent schema, and the USE CATALOG privilege on the parent catalog.
+
+You must have permission to use an existing compute resource or create a new compute resource. See Get started with Databricks or see your Databricks administrator.
+
+Tip
+
+For a completed notebook for this article, see Cleanse and enhance data notebooks.
+
+Step 1: Create a new notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 2: Define variables
+In this step, you define variables for use in the example notebook you create in this article.
+
+Copy and paste the following code into the new empty notebook cell. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice. You will save the baby name data into this table later in this article.
+
+Press Shift+Enter to run the cell and create a new blank cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+catalog = "<catalog_name>"
+schema = "<schema_name>"
+table_name = "baby_names"
+silver_table_name = "baby_names_prepared"
+gold_table_name = "top_baby_names_2021"
+path_table = catalog + "." + schema
+print(path_table) # Show the complete path
+Step 3: Load the raw data into a new DataFrame
+This step loads the raw data previously saved into a Delta table into a new DataFrame in preparation for cleansing and enhancing this data for further analysis.
+
+Copy and paste the following code into the new empty notebook cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df_raw = spark.read.table(f"{path_table}.{table_name}")
+display(df_raw)
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 4: Cleanse and enhance raw data and save
+In this step, you change the name of the Year column, change the data in the First_Name column to initial capitals, and update the values for the Sex column to spell out the sex, and then save the DataFrame to a new table.
+
+Copy and paste the following code into an empty notebook cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+from pyspark.sql.functions import col, initcap, when
+
+# Rename "Year" column to "Year_Of_Birth"
+df_rename_year = df_raw.withColumnRenamed("Year", "Year_Of_Birth")
+
+# Change the case of "First_Name" column to initcap
+df_init_caps = df_rename_year.withColumn("First_Name", initcap(col("First_Name").cast("string")))
+
+# Update column values from "M" to "male" and "F" to "female"
+df_baby_names_sex = df_init_caps.withColumn(
+"Sex",
+    when(col("Sex") == "M", "Male")
+    .when(col("Sex") == "F", "Female")
+)
+
+# display
+display(df_baby_names_sex)
+
+# Save DataFrame to table
+df_baby_names_sex.write.mode("overwrite").saveAsTable(f"{path_table}.{silver_table_name}")
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 5: Group and visualize data
+In this step, you filter the data to only the year 2021, group the data by sex and name, aggregate by count, and order by count. You then save the DataFrame to a table and then visualize the data in a bar chart.
+
+Copy and paste the following code into an empty notebook cell.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+from pyspark.sql.functions import expr, sum, desc
+from pyspark.sql import Window
+
+# Count of names for entire state of New York by sex
+df_baby_names_2021_grouped=(df_baby_names_sex
+.filter(expr("Year_Of_Birth == 2021"))
+.groupBy("Sex", "First_Name")
+.agg(sum("Count").alias("Total_Count"))
+.sort(desc("Total_Count")))
+
+# Display data
+display(df_baby_names_2021_grouped)
+
+# Save DataFrame to a table
+df_baby_names_2021_grouped.write.mode("overwrite").saveAsTable(f"{path_table}.{gold_table_name}")
+Press Ctrl+Enter to run the cell.
+
+Next to the Table tab, click + and then click Visualization.
+
+In the visualization editor, click Visualization Type, and verify that Bar is selected.
+
+In the X column, select`First_Name`.
+
+Click Add column under Y columns and then select Total_Count.
+
+In Group by, select Sex.
+
+gold table
+Click Save.
+
+Cleanse and enhance data notebooks
+Use one of the following notebooks to perform the steps in this article. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Optionally replace the table_name value with a table name of your choice.
+
+Python
+Scala
+R
+Cleanse and enhance data using Python
+Open notebook in new tabCopy to clipboard Copy link for import
+
+
+Expand notebook ▼
+Additional resources
+Get started: Query and visualize data from a notebook
+
+Get started: Import and visualize CSV data from a notebook
+
+Get started: Ingest and insert additional data
+
+Tutorial: Load and transform data using Apache Spark DataFrames
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Requirements
+Step 1: Create a new notebook
+Step 2: Define variables
+Step 3: Load the raw data into a new DataFrame
+Step 4: Cleanse and enhance raw data and save
+Step 5: Group and visualize data
+Cleanse and enhance data notebooks
+Additional resources
+
+
+
+Build an end-to-end data pipeline in Databricks
+October 04, 2024
+
+This article shows you how to create and deploy an end-to-end data processing pipeline, including how to ingest raw data, transform the data, and run analyses on the processed data.
+
+Note
+
+Although this article demonstrates how to create a complete data pipeline using Databricks notebooks and a Databricks job to orchestrate a workflow, Databricks recommends using Delta Live Tables, a declarative interface for building reliable, maintainable, and testable data processing pipelines.
+
+What is a data pipeline?
+A data pipeline implements the steps required to move data from source systems, transform that data based on requirements, and store the data in a target system. A data pipeline includes all the processes necessary to turn raw data into prepared data that users can consume. For example, a data pipeline might prepare data so data analysts and data scientists can extract value from the data through analysis and reporting.
+
+An extract, transform, and load (ETL) workflow is a common example of a data pipeline. In ETL processing, data is ingested from source systems and written to a staging area, transformed based on requirements (ensuring data quality, deduplicating records, and so forth), and then written to a target system such as a data warehouse or data lake.
+
+Data pipeline steps
+To help you get started building data pipelines on Databricks, the example included in this article walks through creating a data processing workflow:
+
+Use Databricks features to explore a raw dataset.
+
+Create a Databricks notebook to ingest raw source data and write the raw data to a target table.
+
+Create a Databricks notebook to transform the raw source data and write the transformed data to a target table.
+
+Create a Databricks notebook to query the transformed data.
+
+Automate the data pipeline with a Databricks job.
+
+Requirements
+You’re logged into Databricks and in the Data Science & Engineering workspace.
+
+You have permission to create a cluster or access to a cluster.
+
+(Optional) To publish tables to Unity Catalog, you must create a catalog and schema in Unity Catalog.
+
+Example: Million Song dataset
+The dataset used in this example is a subset of the Million Song Dataset, a collection of features and metadata for contemporary music tracks. This dataset is available in the sample datasets included in your Databricks workspace.
+
+Step 1: Create a cluster
+To perform the data processing and analysis in this example, create a cluster to provide the compute resources needed to run commands.
+
+Note
+
+Because this example uses a sample dataset stored in DBFS and recommends persisting tables to Unity Catalog, you create a cluster configured with single user access mode. Single user access mode provides full access to DBFS while also enabling access to Unity Catalog. See Best practices for DBFS and Unity Catalog.
+
+Click Compute in the sidebar.
+
+On the Compute page, click Create Cluster.
+
+On the New Cluster page, enter a unique name for the cluster.
+
+In Access mode, select Single User.
+
+In Single user or service principal access, select your user name.
+
+Leave the remaining values in their default state, and click Create Cluster.
+
+To learn more about Databricks clusters, see Compute.
+
+Step 2: Explore the source data
+To learn how to use the Databricks interface to explore the raw source data, see Explore the source data for a data pipeline. If you want to go directly to ingesting and preparing the data, continue to Step 3: Ingest the raw data.
+
+Step 3: Ingest the raw data
+In this step, you load the raw data into a table to make it available for further processing. To manage data assets on the Databricks platform such as tables, Databricks recommends Unity Catalog. However, if you don’t have permissions to create the required catalog and schema to publish tables to Unity Catalog, you can still complete the following steps by publishing tables to the Hive metastore.
+
+To ingest data, Databricks recommends using Auto Loader. Auto Loader automatically detects and processes new files as they arrive in cloud object storage.
+
+You can configure Auto Loader to automatically detect the schema of loaded data, allowing you to initialize tables without explicitly declaring the data schema and evolve the table schema as new columns are introduced. This eliminates the need to manually track and apply schema changes over time. Databricks recommends schema inference when using Auto Loader. However, as seen in the data exploration step, the songs data does not contain header information. Because the header is not stored with the data, you’ll need to explicitly define the schema, as shown in the next example.
+
+In the sidebar, click New Icon New and select Notebook from the menu. The Create Notebook dialog appears.
+
+Enter a name for the notebook, for example, Ingest songs data. By default:
+
+Python is the selected language.
+
+The notebook is attached to the last cluster you used. In this case, the cluster you created in Step 1: Create a cluster.
+
+Enter the following into the first cell of the notebook:
+
+Copy to clipboardCopy
+Python
+from pyspark.sql.types import DoubleType, IntegerType, StringType, StructType, StructField
+
+# Define variables used in the code below
+file_path = "/databricks-datasets/songs/data-001/"
+table_name = "<table-name>"
+checkpoint_path = "/tmp/pipeline_get_started/_checkpoint/song_data"
+
+schema = StructType(
+  [
+    StructField("artist_id", StringType(), True),
+    StructField("artist_lat", DoubleType(), True),
+    StructField("artist_long", DoubleType(), True),
+    StructField("artist_location", StringType(), True),
+    StructField("artist_name", StringType(), True),
+    StructField("duration", DoubleType(), True),
+    StructField("end_of_fade_in", DoubleType(), True),
+    StructField("key", IntegerType(), True),
+    StructField("key_confidence", DoubleType(), True),
+    StructField("loudness", DoubleType(), True),
+    StructField("release", StringType(), True),
+    StructField("song_hotnes", DoubleType(), True),
+    StructField("song_id", StringType(), True),
+    StructField("start_of_fade_out", DoubleType(), True),
+    StructField("tempo", DoubleType(), True),
+    StructField("time_signature", DoubleType(), True),
+    StructField("time_signature_confidence", DoubleType(), True),
+    StructField("title", StringType(), True),
+    StructField("year", IntegerType(), True),
+    StructField("partial_sequence", IntegerType(), True)
+  ]
+)
+
+(spark.readStream
+  .format("cloudFiles")
+  .schema(schema)
+  .option("cloudFiles.format", "csv")
+  .option("sep","\t")
+  .load(file_path)
+  .writeStream
+  .option("checkpointLocation", checkpoint_path)
+  .trigger(availableNow=True)
+  .toTable(table_name)
+)
+If you are using Unity Catalog, replace <table-name> with a catalog, schema, and table name to contain the ingested records (for example, data_pipelines.songs_data.raw_song_data). Otherwise, replace <table-name> with the name of a table to contain the ingested records, for example, raw_song_data.
+
+Replace <checkpoint-path> with a path to a directory in DBFS to maintain checkpoint files, for example, /tmp/pipeline_get_started/_checkpoint/song_data.
+
+Click Run Menu, and select Run Cell. This example defines the data schema using the information from the README, ingests the songs data from all of the files contained in file_path, and writes the data to the table specified by table_name.
+
+Step 4: Prepare the raw data
+To prepare the raw data for analysis, the following steps transform the raw songs data by filtering out unneeded columns and adding a new field containing a timestamp for the creation of the new record.
+
+In the sidebar, click New Icon New and select Notebook from the menu. The Create Notebook dialog appears.
+
+Enter a name for the notebook. For example, Prepare songs data. Change the default language to SQL.
+
+Enter the following in the first cell of the notebook:
+
+Copy to clipboardCopy
+SQL
+CREATE OR REPLACE TABLE
+  <table-name> (
+    artist_id STRING,
+    artist_name STRING,
+    duration DOUBLE,
+    release STRING,
+    tempo DOUBLE,
+    time_signature DOUBLE,
+    title STRING,
+    year DOUBLE,
+    processed_time TIMESTAMP
+  );
+
+INSERT INTO
+  <table-name>
+SELECT
+  artist_id,
+  artist_name,
+  duration,
+  release,
+  tempo,
+  time_signature,
+  title,
+  year,
+  current_timestamp()
+FROM
+  <raw-songs-table-name>
+If you are using Unity Catalog, replace <table-name> with a catalog, schema, and table name to contain the filtered and transformed records (for example, data_pipelines.songs_data.prepared_song_data). Otherwise, replace <table-name> with the name of a table to contain the filtered and transformed records (for example, prepared_song_data).
+
+Replace <raw-songs-table-name> with the name of the table containing the raw songs records ingested in the previous step.
+
+Click Run Menu, and select Run Cell.
+
+Step 5: Query the transformed data
+In this step, you extend the processing pipeline by adding queries to analyze the songs data. These queries use the prepared records created in the previous step.
+
+In the sidebar, click New Icon New and select Notebook from the menu. The Create Notebook dialog appears.
+
+Enter a name for the notebook. For example, Analyze songs data. Change the default language to SQL.
+
+Enter the following in the first cell of the notebook:
+
+Copy to clipboardCopy
+SQL
+-- Which artists released the most songs each year?
+SELECT
+  artist_name,
+  count(artist_name)
+AS
+  num_songs,
+  year
+FROM
+  <prepared-songs-table-name>
+WHERE
+  year > 0
+GROUP BY
+  artist_name,
+  year
+ORDER BY
+  num_songs DESC,
+  year DESC
+Replace <prepared-songs-table-name> with the name of the table containing prepared data. For example, data_pipelines.songs_data.prepared_song_data.
+
+Click Down Caret in the cell actions menu, select Add Cell Below and enter the following in the new cell:
+
+Copy to clipboardCopy
+SQL
+ -- Find songs for your DJ list
+ SELECT
+   artist_name,
+   title,
+   tempo
+ FROM
+   <prepared-songs-table-name>
+ WHERE
+   time_signature = 4
+   AND
+   tempo between 100 and 140;
+Replace <prepared-songs-table-name> with the name of the prepared table created in the previous step. For example, data_pipelines.songs_data.prepared_song_data.
+
+To run the queries and view the output, click Run all.
+
+Step 6: Create a Databricks job to run the pipeline
+You can create a workflow to automate running the data ingestion, processing, and analysis steps using a Databricks job.
+
+In your Data Science & Engineering workspace, do one of the following:
+
+Click Workflows Icon Workflows in the sidebar and click Create Job Button.
+
+In the sidebar, click New Icon New and select Job.
+
+In the task dialog box on the Tasks tab, replace Add a name for your job… with your job name. For example, “Songs workflow”.
+
+In Task name, enter a name for the first task, for example, Ingest_songs_data.
+
+In Type, select the Notebook task type.
+
+In Source, select Workspace.
+
+Use the file browser to find the data ingestion notebook, click the notebook name, and click Confirm.
+
+In Cluster, select Shared_job_cluster or the cluster you created in the Create a cluster step.
+
+Click Create.
+
+Click Add Task Button below the task you just created and select Notebook.
+
+In Task name, enter a name for the task, for example, Prepare_songs_data.
+
+In Type, select the Notebook task type.
+
+In Source, select Workspace.
+
+Use the file browser to find the data preparation notebook, click the notebook name, and click Confirm.
+
+In Cluster, select Shared_job_cluster or the cluster you created in the Create a cluster step.
+
+Click Create.
+
+Click Add Task Button below the task you just created and select Notebook.
+
+In Task name, enter a name for the task, for example, Analyze_songs_data.
+
+In Type, select the Notebook task type.
+
+In Source, select Workspace.
+
+Use the file browser to find the data analysis notebook, click the notebook name, and click Confirm.
+
+In Cluster, select Shared_job_cluster or the cluster you created in the Create a cluster step.
+
+Click Create.
+
+To run the workflow, Click Run Now Button. To view details for the run, click the link in the Start time column for the run in the job runs view. Click each task to view details for the task run.
+
+To view the results when the workflow completes, click the final data analysis task. The Output page appears and displays the query results.
+
+Step 7: Schedule the data pipeline job
+Note
+
+To demonstrate using a Databricks job to orchestrate a scheduled workflow, this getting started example separates the ingestion, preparation, and analysis steps into separate notebooks, and each notebook is then used to create a task in the job. If all of the processing is contained in a single notebook, you can easily schedule the notebook directly from the Databricks notebook UI. See Create and manage scheduled notebook jobs.
+
+A common requirement is to run a data pipeline on a scheduled basis. To define a schedule for the job that runs the pipeline:
+
+Click Workflows Icon Workflows in the sidebar.
+
+In the Name column, click the job name. The side panel displays the Job details.
+
+Click Add trigger in the Job details panel and select Scheduled in Trigger type.
+
+Specify the period, starting time, and time zone. Optionally select the Show Cron Syntax checkbox to display and edit the schedule in Quartz Cron Syntax.
+
+Click Save.
+
+Learn more
+To learn more about Databricks notebooks, see Introduction to Databricks notebooks.
+
+To learn more about Databricks Jobs, see What are Databricks Jobs?.
+
+To learn more about Delta Lake, see What is Delta Lake?.
+
+To learn more about data processing pipelines with Delta Live Tables, see What is Delta Live Tables?.
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+What is a data pipeline?
+Data pipeline steps
+Requirements
+Example: Million Song dataset
+Step 1: Create a cluster
+Step 2: Explore the source data
+Step 3: Ingest the raw data
+Step 4: Prepare the raw data
+Step 5: Query the transformed data
+Step 6: Create a Databricks job to run the pipeline
+Step 7: Schedule the data pipeline job
+Learn more
+
+
+
+Tutorial: Run an end-to-end lakehouse analytics pipeline
+August 27, 2024
+
+This tutorial shows you how to set up an end-to-end analytics pipeline for a Databricks lakehouse.
+
+Important
+
+This tutorial uses interactive notebooks to complete common ETL tasks in Python on Unity Catalog enabled clusters. If you are not using Unity Catalog, see Run your first ETL workload on Databricks.
+
+Tasks in this tutorial
+By the end of this article, you will feel comfortable:
+
+Launching a Unity Catalog enabled compute cluster.
+
+Creating a Databricks notebook.
+
+Writing and reading data from a Unity Catalog external location.
+
+Configuring incremental data ingestion to a Unity Catalog table with Auto Loader.
+
+Executing notebook cells to process, query, and preview data.
+
+Scheduling a notebook as a Databricks job.
+
+Querying Unity Catalog tables from Databricks SQL
+
+Databricks provides a suite of production-ready tools that allow data professionals to quickly develop and deploy extract, transform, and load (ETL) pipelines. Unity Catalog allows data stewards to configure and secure storage credentials, external locations, and database objects for users throughout an organization. Databricks SQL allows analysts to run SQL queries against the same tables used in production ETL workloads, allowing for real time business intelligence at scale.
+
+You can also use Delta Live Tables to build ETL pipelines. Databricks created Delta Live Tables to reduce the complexity of building, deploying, and maintaining production ETL pipelines. See Tutorial: Run your first Delta Live Tables pipeline.
+
+Requirements
+You are logged into Databricks.
+
+Note
+
+If you do not have cluster control privileges, you can still complete most of the steps below as long as you have access to a cluster.
+
+Step 1: Create a cluster
+To do exploratory data analysis and data engineering, create a cluster to provide the compute resources needed to execute commands.
+
+Click compute icon Compute in the sidebar.
+
+Click New Icon New in the sidebar, then select Cluster. This opens the New Cluster/Compute page.
+
+Specify a unique name for the cluster.
+
+Select the Single node radio button.
+
+Select Single User from the Access mode dropdown.
+
+Make sure your email address is visible in the Single User field.
+
+Select the desired Databricks runtime version, 11.1 or above to use Unity Catalog.
+
+Click Create compute to create the cluster.
+
+To learn more about Databricks clusters, see Compute.
+
+Step 2: Create a Databricks notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 3: Write and read data from an external location managed by Unity Catalog
+Databricks recommends using Auto Loader for incremental data ingestion. Auto Loader automatically detects and processes new files as they arrive in cloud object storage.
+
+Use Unity Catalog to manage secure access to external locations. Users or service principals with READ FILES permissions on an external location can use Auto Loader to ingest data.
+
+Normally, data will arrive in an external location due to writes from other systems. In this demo, you can simulate data arrival by writing out JSON files to an external location.
+
+Copy the code below into a notebook cell. Replace the string value for catalog with the name of a catalog with CREATE CATALOG and USE CATALOG permissions. Replace the string value for external_location with the path for an external location with READ FILES, WRITE FILES, and CREATE EXTERNAL TABLE permissions.
+
+External locations can be defined as an entire storage container, but often point to a directory nested in a container.
+
+The correct format for an external location path is "s3://bucket-name/path/to/external_location".
+
+Copy to clipboardCopy
+Python
+
+ external_location = "<your-external-location>"
+ catalog = "<your-catalog>"
+
+ dbutils.fs.put(f"{external_location}/filename.txt", "Hello world!", True)
+ display(dbutils.fs.head(f"{external_location}/filename.txt"))
+ dbutils.fs.rm(f"{external_location}/filename.txt")
+
+ display(spark.sql(f"SHOW SCHEMAS IN {catalog}"))
+Executing this cell should print a line that reads 12 bytes, print the string “Hello world!”, and display all the databases present in the catalog provided. If you are unable to get this cell to run, confirm that you are in a Unity Catalog enabled workspace and request proper permissions from your workspace administrator to complete this tutorial.
+
+The Python code below uses your email address to create a unique database in the catalog provided and a unique storage location in external location provided. Executing this cell will remove all data associated with this tutorial, allowing you to execute this example idempotently. A class is defined and instantiated that you will use to simulate batches of data arriving from a connected system to your source external location.
+
+Copy this code to a new cell in your notebook and execute it to configure your environment.
+
+Note
+
+The variables defined in this code should allow you to safely execute it without risk of conflicting with existing workspace assets or other users. Restricted network or storage permissions will raise errors when executing this code; contact your workspace administrator to troubleshoot these restrictions.
+
+Copy to clipboardCopy
+Python
+
+from pyspark.sql.functions import col
+
+# Set parameters for isolation in workspace and reset demo
+username = spark.sql("SELECT regexp_replace(current_user(), '[^a-zA-Z0-9]', '_')").first()[0]
+database = f"{catalog}.e2e_lakehouse_{username}_db"
+source = f"{external_location}/e2e-lakehouse-source"
+table = f"{database}.target_table"
+checkpoint_path = f"{external_location}/_checkpoint/e2e-lakehouse-demo"
+
+spark.sql(f"SET c.username='{username}'")
+spark.sql(f"SET c.database={database}")
+spark.sql(f"SET c.source='{source}'")
+
+spark.sql("DROP DATABASE IF EXISTS ${c.database} CASCADE")
+spark.sql("CREATE DATABASE ${c.database}")
+spark.sql("USE ${c.database}")
+
+# Clear out data from previous demo execution
+dbutils.fs.rm(source, True)
+dbutils.fs.rm(checkpoint_path, True)
+
+
+# Define a class to load batches of data to source
+class LoadData:
+
+    def __init__(self, source):
+        self.source = source
+
+    def get_date(self):
+        try:
+            df = spark.read.format("json").load(source)
+        except:
+            return "2016-01-01"
+        batch_date = df.selectExpr("max(distinct(date(tpep_pickup_datetime))) + 1 day").first()[0]
+        if batch_date.month == 3:
+            raise Exception("Source data exhausted")
+        return batch_date
+
+    def get_batch(self, batch_date):
+        return (
+            spark.table("samples.nyctaxi.trips")
+            .filter(col("tpep_pickup_datetime").cast("date") == batch_date)
+        )
+
+    def write_batch(self, batch):
+        batch.write.format("json").mode("append").save(self.source)
+
+    def land_batch(self):
+        batch_date = self.get_date()
+        batch = self.get_batch(batch_date)
+        self.write_batch(batch)
+
+RawData = LoadData(source)
+You can now land a batch of data by copying the following code into a cell and executing it. You can manually execute this cell up to 60 times to trigger new data arrival.
+
+Copy to clipboardCopy
+Python
+RawData.land_batch()
+Step 4: Configure Auto Loader to ingest data to Unity Catalog
+Databricks recommends storing data with Delta Lake. Delta Lake is an open source storage layer that provides ACID transactions and enables the data lakehouse. Delta Lake is the default format for tables created in Databricks.
+
+To configure Auto Loader to ingest data to a Unity Catalog table, copy and paste the following code into an empty cell in your notebook:
+
+Copy to clipboardCopy
+Python
+# Import functions
+from pyspark.sql.functions import col, current_timestamp
+
+# Configure Auto Loader to ingest JSON data to a Delta table
+(spark.readStream
+  .format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", checkpoint_path)
+  .load(source)
+  .select("*", col("_metadata.source").alias("source_file"), current_timestamp().alias("processing_time"))
+  .writeStream
+  .option("checkpointLocation", checkpoint_path)
+  .trigger(availableNow=True)
+  .option("mergeSchema", "true")
+  .toTable(table))
+To learn more about Auto Loader, see What is Auto Loader?.
+
+To learn more about Structured Streaming with Unity Catalog, see Using Unity Catalog with Structured Streaming.
+
+Step 5: Process and interact with data
+Notebooks execute logic cell-by-cell. Use these steps to execute the logic in your cell:
+
+To run the cell you completed in the previous step, select the cell and press SHIFT+ENTER.
+
+To query the table you’ve just created, copy and paste the following code into an empty cell, then press SHIFT+ENTER to run the cell.
+
+Copy to clipboardCopy
+Python
+df = spark.read.table(table)
+To preview the data in your DataFrame, copy and paste the following code into an empty cell, then press SHIFT+ENTER to run the cell.
+
+Copy to clipboardCopy
+Python
+display(df)
+To learn more about interactive options for visualizing data, see Visualizations in Databricks notebooks.
+
+Step 6: Schedule a job
+You can run Databricks notebooks as production scripts by adding them as a task in a Databricks job. In this step, you will create a new job that you can trigger manually.
+
+To schedule your notebook as a task:
+
+Click Schedule on the right side of the header bar.
+
+Enter a unique name for the Job name.
+
+Click Manual.
+
+In the Cluster drop-down, select the cluster you created in step 1.
+
+Click Create.
+
+In the window that appears, click Run now.
+
+To see the job run results, click the External Link icon next to the Last run timestamp.
+
+For more information on jobs, see What are Databricks Jobs?.
+
+Step 7: Query table from Databricks SQL
+Anyone with the USE CATALOG permission on the current catalog, the USE SCHEMA permission on the current schema, and SELECT permissions on the table can query the contents of the table from their preferred Databricks API.
+
+You need access to a running SQL warehouse to execute queries in Databricks SQL.
+
+The table you created earlier in this tutorial has the name target_table. You can query it using the catalog you provided in the first cell and the database with the patern e2e_lakehouse_<your-username>. You can use Catalog Explorer to find the data objects that you created.
+
+Additional Integrations
+Learn more about integrations and tools for data engineering with Databricks:
+
+Connect your favorite IDE
+
+Use dbt with Databricks
+
+Learn about the Databricks Command Line Interface (CLI)
+
+Learn about the Databricks Terraform Provider
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Tasks in this tutorial
+Requirements
+Step 1: Create a cluster
+Step 2: Create a Databricks notebook
+Step 3: Write and read data from an external location managed by Unity Catalog
+Step 4: Configure Auto Loader to ingest data to Unity Catalog
+Step 5: Process and interact with data
+Step 6: Schedule a job
+Step 7: Query table from Databricks SQL
+Additional Integrations
+
+
+Get started: Build your first machine learning model on Databricks
+September 30, 2024
+
+This article shows you how to build a machine learning classification model using the scikit-learn library on Databricks.
+
+The goal is to create a classification model to predict whether a wine is considered “high-quality”. The dataset consists of 11 features of different wines (for example, alcohol content, acidity, and residual sugar) and a quality ranking between 1 to 10.
+
+This example also illustrates the use of MLflow to track the model development process, and Hyperopt to automate hyperparameter tuning.
+
+The dataset is from the UCI Machine Learning Repository, presented in Modeling wine preferences by data mining from physicochemical properties [Cortez et al., 2009].
+
+Before you begin
+Your workspace must be enabled for Unity Catalog.
+
+You must have permission to create a cluster or access to a cluster.
+
+You must have the USE_CATALOG privilege on a catalog.
+
+Within that catalog, you must have the following privileges on a schema: USE_SCHEMA, CREATE_TABLE, and CREATE_MODEL.
+
+Tip
+
+All of the code in this article is available in a notebook that you can import directly into your workspace. See Example notebook: Build a classification model.
+
+Step 1: Create a Databricks notebook
+To create a notebook in your workspace, click New Icon New in the sidebar, and then click Notebook. A blank notebook opens in the workspace.
+
+To learn more about creating and managing notebooks, see Manage notebooks.
+
+Step 2: Connect to compute resources
+To do exploratory data analysis and data engineering, you must have access to compute.
+
+For instructions on connecting to existing compute resources, see Compute. For instructions on configuring a new compute resource, see Compute configuration reference.
+
+The steps in this article require Databricks Runtime for Machine Learning. For more information and instructions for selecting an ML version of Databricks Runtime, see Databricks Runtime for Machine Learning.
+
+Step 3: Set up model registry, catalog, and schema
+There are two important steps required before you get started. First, you must configure the MLflow client to use Unity Catalog as the model registry. Enter the following code into a new cell in your notebook.
+
+Copy to clipboardCopy
+Python
+import mlflow
+mlflow.set_registry_uri("databricks-uc")
+You must also set the catalog and schema where the model will be registered. You must have USE CATALOG privilege on the catalog, and USE_SCHEMA, CREATE_TABLE, and CREATE_MODEL privileges on the schema.
+
+For more information about how to use Unity Catalog, see What is Unity Catalog?.
+
+Enter the following code into a new cell in your notebook.
+
+Copy to clipboardCopy
+Python
+# If necessary, replace "main" and "default" with a catalog and schema for which you have the required permissions.
+CATALOG_NAME = "main"
+SCHEMA_NAME = "default"
+Step 4: Load data and create Unity Catalog tables
+This example uses two CSV files that are built into Databricks. To learn how to ingest your own data, see Ingest data into a Databricks lakehouse.
+
+Enter the following code into a new cell in your notebook.
+
+Copy to clipboardCopy
+Python
+white_wine = spark.read.csv("dbfs:/databricks-datasets/wine-quality/winequality-white.csv", sep=';', header=True)
+red_wine = spark.read.csv("dbfs:/databricks-datasets/wine-quality/winequality-red.csv", sep=';', header=True)
+
+# Remove the spaces from the column names
+for c in white_wine.columns:
+    white_wine = white_wine.withColumnRenamed(c, c.replace(" ", "_"))
+for c in red_wine.columns:
+    red_wine = red_wine.withColumnRenamed(c, c.replace(" ", "_"))
+
+# Define table names
+red_wine_table = f"{CATALOG_NAME}.{SCHEMA_NAME}.red_wine"
+white_wine_table = f"{CATALOG_NAME}.{SCHEMA_NAME}.white_wine"
+
+# Write to tables in Unity Catalog
+spark.sql(f"DROP TABLE IF EXISTS {red_wine_table}")
+spark.sql(f"DROP TABLE IF EXISTS {white_wine_table}")
+white_wine.write.saveAsTable(f"{CATALOG_NAME}.{SCHEMA_NAME}.white_wine")
+red_wine.write.saveAsTable(f"{CATALOG_NAME}.{SCHEMA_NAME}.red_wine")
+Step 5. Preprocess and split the data
+In this step, you load the data from the Unity Catalog tables you created in Step 4 into Pandas DataFrames and preprocess the data. The code in this section does the following:
+
+Loads the data as Pandas DataFrames.
+
+Adds a Boolean column to each DataFrame to distinguish red and white wines, and then combines the DataFrames into a new DataFrame, data_df.
+
+The dataset includes a quality column that rates wines from 1 to 10, with 10 indicating the highest quality. The code transforms this column into two classification values: “True” to indicate a high-quality wine (quality >= 7) and “False” to indicate a wine that is not high-quality (quality < 7).
+
+Splits the DataFrame into separate train and test datasets.
+
+First, import the required libraries:
+
+Copy to clipboardCopy
+Python
+import numpy as np
+import pandas as pd
+import sklearn.datasets
+import sklearn.metrics
+import sklearn.model_selection
+import sklearn.ensemble
+
+import matplotlib.pyplot as plt
+
+from hyperopt import fmin, tpe, hp, SparkTrials, Trials, STATUS_OK
+from hyperopt.pyll import scope
+Now load and preprocess the data:
+
+Copy to clipboardCopy
+Python
+# Load data from Unity Catalog as Pandas dataframes
+white_wine = spark.read.table(f"{CATALOG_NAME}.{SCHEMA_NAME}.white_wine").toPandas()
+red_wine = spark.read.table(f"{CATALOG_NAME}.{SCHEMA_NAME}.red_wine").toPandas()
+
+# Add Boolean fields for red and white wine
+white_wine['is_red'] = 0.0
+red_wine['is_red'] = 1.0
+data_df = pd.concat([white_wine, red_wine], axis=0)
+
+# Define classification labels based on the wine quality
+data_labels = data_df['quality'].astype('int') >= 7
+data_df = data_df.drop(['quality'], axis=1)
+
+# Split 80/20 train-test
+X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
+  data_df,
+  data_labels,
+  test_size=0.2,
+  random_state=1
+)
+Step 6. Train the classification model
+This step trains a gradient boosting classifier using the default algorithm settings. It then applies the resulting model to the test dataset and calculates, logs, and displays the area under the receiver operating curve to evaluate the model’s performance.
+
+First, enable MLflow autologging:
+
+Copy to clipboardCopy
+Python
+mlflow.autolog()
+Now start the model training run:
+
+Copy to clipboardCopy
+Python
+with mlflow.start_run(run_name='gradient_boost') as run:
+    model = sklearn.ensemble.GradientBoostingClassifier(random_state=0)
+
+    # Models, parameters, and training metrics are tracked automatically
+    model.fit(X_train, y_train)
+
+    predicted_probs = model.predict_proba(X_test)
+    roc_auc = sklearn.metrics.roc_auc_score(y_test, predicted_probs[:,1])
+    roc_curve = sklearn.metrics.RocCurveDisplay.from_estimator(model, X_test, y_test)
+
+    # Save the ROC curve plot to a file
+    roc_curve.figure_.savefig("roc_curve.png")
+
+    # The AUC score on test data is not automatically logged, so log it manually
+    mlflow.log_metric("test_auc", roc_auc)
+
+    # Log the ROC curve image file as an artifact
+    mlflow.log_artifact("roc_curve.png")
+
+    print("Test AUC of: {}".format(roc_auc))
+The cell results show the calculated area under the curve and a plot of the ROC curve:
+
+ROC curve for classification model.
+Step 7. View experiment runs in MLflow
+MLflow experiment tracking helps you keep track of model development by logging code and results as you iteratively develop models.
+
+To view the logged results from the training run you just executed, click the link in the cell output, as shown in the following image.
+
+Link to experiment in cell results.
+The experiment page allows you to compare runs and view details for specific runs. See MLflow experiment tracking.
+
+Step 8. Hyperparameter tuning
+An important step in developing an ML model is optimizing the model’s accuracy by tuning the parameters that control the algorithm, called hyperparameters.
+
+Databricks Runtime ML includes Hyperopt, a Python library for hyperparameter tuning. You can use Hyperopt to run hyperparameter sweeps and train multiple models in parallel, reducing the time required to optimize model performance. MLflow tracking is integrated with Hyperopt to automatically log models and parameters. For more information about using Hyperopt in Databricks, see Hyperparameter tuning.
+
+The following code shows an example of using Hyperopt.
+
+Copy to clipboardCopy
+Python
+# Define the search space to explore
+search_space = {
+  'n_estimators': scope.int(hp.quniform('n_estimators', 20, 1000, 1)),
+  'learning_rate': hp.loguniform('learning_rate', -3, 0),
+  'max_depth': scope.int(hp.quniform('max_depth', 2, 5, 1)),
+}
+
+def train_model(params):
+  # Enable autologging on each worker
+  mlflow.autolog()
+  with mlflow.start_run(nested=True):
+    model_hp = sklearn.ensemble.GradientBoostingClassifier(
+      random_state=0,
+      **params
+    )
+    model_hp.fit(X_train, y_train)
+    predicted_probs = model_hp.predict_proba(X_test)
+    # Tune based on the test AUC
+    # In production, you could use a separate validation set instead
+    roc_auc = sklearn.metrics.roc_auc_score(y_test, predicted_probs[:,1])
+    mlflow.log_metric('test_auc', roc_auc)
+
+    # Set the loss to -1*auc_score so fmin maximizes the auc_score
+    return {'status': STATUS_OK, 'loss': -1*roc_auc}
+
+# SparkTrials distributes the tuning using Spark workers
+# Greater parallelism speeds processing, but each hyperparameter trial has less information from other trials
+# On smaller clusters try setting parallelism=2
+spark_trials = SparkTrials(
+  parallelism=1
+)
+
+with mlflow.start_run(run_name='gb_hyperopt') as run:
+  # Use hyperopt to find the parameters yielding the highest AUC
+  best_params = fmin(
+    fn=train_model,
+    space=search_space,
+    algo=tpe.suggest,
+    max_evals=32,
+    trials=spark_trials)
+Step 9. Find the best model and register it to Unity Catalog
+The following code identifies the run that produced the best results, as measured by the area under the ROC curve:
+
+Copy to clipboardCopy
+Python
+# Sort runs by their test auc. In case of ties, use the most recent run.
+best_run = mlflow.search_runs(
+  order_by=['metrics.test_auc DESC', 'start_time DESC'],
+  max_results=10,
+).iloc[0]
+print('Best Run')
+print('AUC: {}'.format(best_run["metrics.test_auc"]))
+print('Num Estimators: {}'.format(best_run["params.n_estimators"]))
+print('Max Depth: {}'.format(best_run["params.max_depth"]))
+print('Learning Rate: {}'.format(best_run["params.learning_rate"]))
+Using the run_id that you identified for the best model, the following code registers that model to Unity Catalog.
+
+Copy to clipboardCopy
+Python
+model_uri = 'runs:/{run_id}/model'.format(
+    run_id=best_run.run_id
+  )
+
+mlflow.register_model(model_uri, f"{CATALOG_NAME}.{SCHEMA_NAME}.wine_quality_model")
+Example notebook: Build a classification model
+Use the following notebook to perform the steps in this article. For instructions on importing a notebook to a Databricks workspace, see Import a notebook.
+
+Build your first machine learning model with Databricks
+Open notebook in new tabCopy to clipboard Copy link for import
+
+
+Expand notebook ▼
+Learn more
+Databricks provides a single platform that serves every step of ML development and deployment, from raw data to inference tables that save every request and response for a served model. Data scientists, data engineers, ML engineers, and DevOps can do their jobs using the same set of tools and a single source of truth for the data.
+
+To learn more, see the following:
+
+Machine learning and AI tutorials
+
+Overview of machine learning and AI on Databricks
+
+Overview of training machine learning and AI models on Databricks
+
+ML lifecycle management using MLflow
+
+Related resources
+scikit-learn
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+Before you begin
+Step 1: Create a Databricks notebook
+Step 2: Connect to compute resources
+Step 3: Set up model registry, catalog, and schema
+Step 4: Load data and create Unity Catalog tables
+Step 5. Preprocess and split the data
+Step 6. Train the classification model
+Step 7. View experiment runs in MLflow
+Step 8. Hyperparameter tuning
+Step 9. Find the best model and register it to Unity Catalog
+Example notebook: Build a classification model
+Learn more
+Related resources
+
+
+
+
+Tutorial: Load and transform data using Apache Spark DataFrames
+August 29, 2024
+
+This tutorial shows you how to load and transform data using the Apache Spark Python (PySpark) DataFrame API, the Apache Spark Scala DataFrame API, and the SparkR SparkDataFrame API in Databricks.
+
+By the end of this tutorial, you will understand what a DataFrame is and be familiar with the following tasks:
+
+Python
+Scala
+R
+Define variables and copy public data into a Unity Catalog volume
+
+Create a DataFrame with Python
+
+Load data into a DataFrame from CSV file
+
+View and interact with a DataFrame
+
+Save the DataFrame
+
+Run SQL queries in PySpark
+
+See also Apache Spark PySpark API reference.
+
+What is a DataFrame?
+A DataFrame is a two-dimensional labeled data structure with columns of potentially different types. You can think of a DataFrame like a spreadsheet, a SQL table, or a dictionary of series objects. Apache Spark DataFrames provide a rich set of functions (select columns, filter, join, aggregate) that allow you to solve common data analysis problems efficiently.
+
+Apache Spark DataFrames are an abstraction built on top of Resilient Distributed Datasets (RDDs). Spark DataFrames and Spark SQL use a unified planning and optimization engine, allowing you to get nearly identical performance across all supported languages on Databricks (Python, SQL, Scala, and R).
+
+Requirements
+To complete the following tutorial, you must meet the following requirements:
+
+To use the examples in this tutorial, your workspace must have Unity Catalog enabled.
+
+The examples in this tutorial use a Unity Catalog volume to store sample data. To use these examples, create a volume and use that volume’s catalog, schema, and volume names to set the volume path used by the examples.
+
+You must have the following permissions in Unity Catalog:
+
+READ VOLUME and WRITE VOLUME, or ALL PRIVILEGES for the volume used for this tutorial.
+
+USE SCHEMA or ALL PRIVILEGES for the schema used for this tutorial.
+
+USE CATALOG or ALL PRIVILEGES for the catalog used for this tutorial.
+
+To set these permissions, see your Databricks administrator or Unity Catalog privileges and securable objects.
+
+Tip
+
+For a completed notebook for this article, see DataFrame tutorial notebooks.
+
+Step 1: Define variables and load CSV file
+This step defines variables for use in this tutorial and then loads a CSV file containing baby name data from health.data.ny.gov into your Unity Catalog volume.
+
+Open a new notebook by clicking the New Icon icon. To learn how to navigate Databricks notebooks, see Databricks notebook interface and controls.
+
+Copy and paste the following code into the new empty notebook cell. Replace <catalog-name>, <schema-name>, and <volume-name> with the catalog, schema, and volume names for a Unity Catalog volume. Replace <table_name> with a table name of your choice. You will load baby name data into this table later in this tutorial.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+catalog = "<catalog_name>"
+schema = "<schema_name>"
+volume = "<volume_name>"
+download_url = "https://health.data.ny.gov/api/views/jxy9-yhdk/rows.csv"
+file_name = "rows.csv"
+table_name = "<table_name>"
+path_volume = "/Volumes/" + catalog + "/" + schema + "/" + volume
+path_table = catalog + "." + schema
+print(path_table) # Show the complete path
+print(path_volume) # Show the complete path
+Press Shift+Enter to run the cell and create a new blank cell.
+
+Copy and paste the following code into the new empty notebook cell. This code copies the rows.csv file from health.data.ny.gov into your Unity Catalog volume using the Databricks dbutuils command.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+dbutils.fs.cp(f"{download_url}", f"{path_volume}/{file_name}")
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 2: Create a DataFrame
+This step creates a DataFrame named df1 with test data and then displays its contents.
+
+Copy and paste the following code into the new empty notebook cell. This code creates the DataFrame with test data, and then displays the contents and the schema of the DataFrame.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+data = [[2021, "test", "Albany", "M", 42]]
+columns = ["Year", "First_Name", "County", "Sex", "Count"]
+
+df1 = spark.createDataFrame(data, schema="Year int, First_Name STRING, County STRING, Sex STRING, Count int")
+display(df1) # The display() method is specific to Databricks notebooks and provides a richer visualization.
+# df1.show() The show() method is a part of the Apache Spark DataFrame API and provides basic visualization.
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 3: Load data into a DataFrame from CSV file
+This step creates a DataFrame named df_csv from the CSV file that you previously loaded into your Unity Catalog volume. See spark.read.csv.
+
+Copy and paste the following code into the new empty notebook cell. This code loads baby name data into DataFrame df_csv from the CSV file and then displays the contents of the DataFrame.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df_csv = spark.read.csv(f"{path_volume}/{file_name}",
+    header=True,
+    inferSchema=True,
+    sep=",")
+display(df_csv)
+Press Shift+Enter to run the cell and then move to the next cell.
+
+You can load data from many supported file formats.
+
+Step 4: View and interact with your DataFrame
+View and interact with your baby names DataFrames using the following methods.
+
+Print the DataFrame schema
+Learn how to display the schema of an Apache Spark DataFrame. Apache Spark uses the term schema to refer to the names and data types of the columns in the DataFrame.
+
+Note
+
+Databricks also uses the term schema to describe a collection of tables registered to a catalog.
+
+Copy and paste the following code into an empty notebook cell. This code shows the schema of your DataFrames with the .printSchema() method to view the schemas of the two DataFrames - to prepare to union the two DataFrames.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df_csv.printSchema()
+df1.printSchema()
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Rename column in the DataFrame
+Learn how to rename a column in a DataFrame.
+
+Copy and paste the following code into an empty notebook cell. This code renames a column in the df1_csv DataFrame to match the respective column in the df1 DataFrame. This code uses the Apache Spark withColumnRenamed() method.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df_csv = df_csv.withColumnRenamed("First Name", "First_Name")
+df_csv.printSchema
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Combine DataFrames
+Learn how to create a new DataFrame that adds the rows of one DataFrame to another.
+
+Copy and paste the following code into an empty notebook cell. This code uses the Apache Spark union() method to combine the contents of your first DataFrame df with DataFrame df_csv containing the baby names data loaded from the CSV file.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df = df1.union(df_csv)
+display(df)
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Filter rows in a DataFrame
+Discover the most popular baby names in your data set by filtering rows, using the Apache Spark .filter() or .where() methods. Use filtering to select a subset of rows to return or modify in a DataFrame. There is no difference in performance or syntax, as seen in the following examples.
+
+Using .filter() method
+Copy and paste the following code into an empty notebook cell. This code uses the the Apache Spark .filter() method to display those rows in the DataFrame with a count of more than 50.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(df.filter(df["Count"] > 50))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Using .where() method
+Copy and paste the following code into an empty notebook cell. This code uses the the Apache Spark .where() method to display those rows in the DataFrame with a count of more than 50.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(df.where(df["Count"] > 50))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Select columns from a DataFrame and order by frequency
+Learn about which baby name frequency with the select() method to specify the columns from the DataFrame to return. Use the Apache Spark orderby and desc functions to order the results.
+
+The pyspark.sql module for Apache Spark provides support for SQL functions. Among these functions that we use in this tutorial are the the Apache Spark orderBy(), desc(), and expr() functions. You enable the use of these functions by importing them into your session as needed.
+
+Copy and paste the following code into an empty notebook cell. This code imports the desc() function and then uses the Apache Spark select() method and Apache Spark orderBy() and desc() functions to display the most common names and their counts in descending order.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+from pyspark.sql.functions import desc
+display(df.select("First_Name", "Count").orderBy(desc("Count")))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Create a subset DataFrame
+Learn how to create a subset DataFrame from an existing DataFrame.
+
+Copy and paste the following code into an empty notebook cell. This code uses the Apache Spark filter method to create a new DataFrame restricting the data by year, count, and sex. It uses the Apache Spark select() method to limit the columns. It also uses the Apache Spark orderBy() and desc() functions to sort the new DataFrame by count.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+subsetDF = df.filter((df["Year"] == 2009) & (df["Count"] > 100) & (df["Sex"] == "F")).select("First_Name", "County", "Count").orderBy(desc("Count"))
+display(subsetDF)
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Step 5: Save the DataFrame
+Learn how to save a DataFrame,. You can either save your DataFrame to a table or write the DataFrame to a file or multiple files.
+
+Save the DataFrame to a table
+Databricks uses the Delta Lake format for all tables by default. To save your DataFrame, you must have CREATE table privileges on the catalog and schema.
+
+Copy and paste the following code into an empty notebook cell. This code saves the contents of the DataFrame to a table using the variable you defined at the start of this tutorial.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df.write.mode("overwrite").saveAsTable(f"{path_table}.{table_name}")
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Most Apache Spark applications work on large data sets and in a distributed fashion. Apache Spark writes out a directory of files rather than a single file. Delta Lake splits the Parquet folders and files. Many data systems can read these directories of files. Databricks recommends using tables over file paths for most applications.
+
+Save the DataFrame to JSON files
+Copy and paste the following code into an empty notebook cell. This code saves the DataFrame to a directory of JSON files.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+df.write.format("json").mode("overwrite").save("/tmp/json_data")
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Read the DataFrame from a JSON file
+Learn how to use the Apache Spark spark.read.format() method to read JSON data from a directory into a DataFrame.
+
+Copy and paste the following code into an empty notebook cell. This code displays the JSON files you saved in the previous example.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(spark.read.format("json").json("/tmp/json_data"))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Additional tasks: Run SQL queries in PySpark, Scala, and R
+Apache Spark DataFrames provide the following options to combine SQL with PySpark, Scala, and R. You can run the following code in the same notebook that you created for this tutorial.
+
+Specify a column as a SQL query
+Learn how to use the Apache Spark selectExpr() method. This is a variant of the select() method that accepts SQL expressions and return an updated DataFrame. This method allows you to use a SQL expression, such as upper.
+
+Copy and paste the following code into an empty notebook cell. This code uses the Apache Spark selectExpr() method and the SQL upper expression to convert a string column to upper case (and rename the column).
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(df.selectExpr("Count", "upper(County) as big_name"))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Use expr() to use SQL syntax for a column
+Learn how to import and use the Apache Spark expr() function to use SQL syntax anywhere a column would be specified.
+
+Copy and paste the following code into an empty notebook cell. This code imports the expr() function and then uses the Apache Spark expr() function and the SQL lower expression to convert a string column to lower case (and rename the column).
+
+Python
+Scala
+R
+Copy to clipboardCopy
+from pyspark.sql.functions import expr
+display(df.select("Count", expr("lower(County) as little_name")))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+Run an arbitrary SQL query using spark.sql() function
+Learn how to use the Apache Spark spark.sql() function to run arbitrary SQL queries.
+
+Copy and paste the following code into an empty notebook cell. This code uses the Apache Spark spark.sql() function to query a SQL table using SQL syntax.
+
+Python
+Scala
+R
+Copy to clipboardCopy
+display(spark.sql(f"SELECT * FROM {path_table}.{table_name}"))
+Press Shift+Enter to run the cell and then move to the next cell.
+
+DataFrame tutorial notebooks
+The following notebooks include the examples queries from this tutorial.
+
+Python
+Scala
+R
+DataFrames tutorial using Python
+Open notebook in new tabCopy to clipboard Copy link for import
+
+
+Expand notebook ▼
+Additional resources
+PySpark on Databricks
+
+Reference for Apache Spark APIs
+
+Convert between PySpark and pandas DataFrames
+
+Pandas API on Spark
+
+Was this article helpful?
+© Databricks 2024. All rights reserved. Apache, Apache Spark, Spark, and the Spark logo are trademarks of the Apache Software Foundation.
+
+Send us feedback | Privacy Notice | Terms of Use | Modern Slavery Statement | California Privacy | Your Privacy Choices 
+
+In this article:
+What is a DataFrame?
+Requirements
+Step 1: Define variables and load CSV file
+Step 2: Create a DataFrame
+Step 3: Load data into a DataFrame from CSV file
+Step 4: View and interact with your DataFrame
+Step 5: Save the DataFrame
+Additional tasks: Run SQL queries in PySpark, Scala, and R
+DataFrame tutorial notebooks
+Additional resources
+
+
+
