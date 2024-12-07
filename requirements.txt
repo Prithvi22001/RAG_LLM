@@ -217,7 +217,6 @@ typing-inspect==0.9.0
 typing_extensions==4.12.2
 tzdata==2024.2
 unstructured==0.16.9
-unstructured-client==0.28.1
 unstructured-inference==0.8.1
 unstructured.pytesseract==0.3.13
 urllib3==2.2.3
