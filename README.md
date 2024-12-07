@@ -1,14 +1,13 @@
-# RAG_LLM
 
-## Public Demo Link
-[]
+Table of Contents 
+1. [Setup Instructions](#setup-instructions)
+2. [Architecture](#architecture)
+3. [Future Work](#future-work)
 
-## Setup Instructions
+
+## Local Setup Instructions
 
 1. Clone this repository:
-   ```bash
-   git clone [repository URL]
-   ```
 
 2. Create a Python virtual environment:
    ```bash
@@ -43,7 +42,7 @@ This will start the local Gradio interface.
 
 ## Architecture
 
-The project uses a methodology similar to boosting in machine learning, where multiple models create output. However, instead of a voting mechanism, intermediate outputs are used to create the final runbook.
+The project uses a methodology similar to bagging in machine learning, where multiple models create output. However, instead of a voting mechanism to combine the output, intermediate outputs are used to create the final runbook.
 
 Current Architecture
 ![Current Architecture](current_architecture.png)
