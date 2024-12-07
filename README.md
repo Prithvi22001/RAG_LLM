@@ -7,7 +7,7 @@ Table of Contents
 
 ## Local Setup Instructions
 
-1. Clone this repository:
+1. Clone this repository
 
 2. Create a Python virtual environment:
    ```bash
