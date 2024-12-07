@@ -76,3 +76,4 @@ Future Architecture
    - Fine-tune LLM using LoRA or Adapter tuning
 5. Expand tool and platform coverage:
    - Gather relevant data for other tools and platforms used by Solution Architects
+6. Comprehensive error handling at key stages, such as document loading, API calls, and pipeline execution
