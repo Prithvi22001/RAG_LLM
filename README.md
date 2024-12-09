@@ -1,8 +1,12 @@
 
 Table of Contents 
-1. [Setup Instructions](#setup-instructions)
-2. [Architecture](#architecture)
-3. [Future Work](#future-work)
+1. Demo Hugging Face (#Demo)
+2. [Setup Instructions](#setup-instructions)
+3. [Architecture](#architecture)
+4. [Future Work](#future-work)
+
+##Demo
+[![Using HuggingFace Demo](https://vimeo.com/1037513258?share=copy)
 
 
 ## Local Setup Instructions
