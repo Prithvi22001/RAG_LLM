@@ -7,7 +7,7 @@ Table of Contents
 
 ## Demo
 
-[![Using HuggingFace Demo]](https://vimeo.com/1037513258?share=copy)
+[[Using HuggingFace Demo]](https://vimeo.com/1037513258?share=copy)
 
 
 ## Local Setup Instructions
